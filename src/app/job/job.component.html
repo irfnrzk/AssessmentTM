@@ -1,0 +1,102 @@
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+    <img
+      width="80"
+      alt="TM LOGO"
+      src="assets/img/TM_LOGO.png"
+    />
+    <!--<span>Welcome</span>-->
+    <div class="spacer"></div>
+    <span>WELCOME!</span>&nbsp;&nbsp;
+  </div>
+  
+  <div class="content" role="main">
+  
+    <!-- Highlight Card -->
+   
+  
+    <!-- Filter-->
+    <h2>Filter Jobs</h2>
+  
+   
+      <form [formGroup]="filterForm">
+        <div class="mb-3 row">
+            <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Job ID:</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" formControlName="filterJobID">
+          </div>
+          <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Job Title:</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" formControlName="filterTitle">
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Company:</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" formControlName="filterCompany">
+          </div>
+          <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">State:</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" formControlName="filterState">
+          </div>
+          <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Job Status:</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input class="form-control" type="text" formControlName="filterStatus" list="browsers" placeholder="All">
+            <datalist id="browsers">
+                <option value="Open">
+                <option value="Closed">
+            </datalist>
+          </div>
+          <div class="col-xs-3 col-sm-auto">
+            <button type="button" class="btn btn-primary" (click)="getJobFilter()">Apply</button> 
+          </div>
+        </div>   
+      </form>
+   
+  
+    <!-- Job Records -->
+    <h2>Jobs</h2>
+  
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Job ID</th>
+        <th scope="col">Job Title</th>
+        <th scope="col">Company</th>
+        <th scope="col">State</th>
+        <th scope="col">Job Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let job of jobList | slice: (page-1) * pageSize : page * pageSize; index as i">
+        <th scope="row">{{ job.JobID }}</th>
+        <td>{{ job.JobTitle }}</td>
+        <td>{{ job.Company }}</td>
+        <td>{{ job.State }}</td>
+        <td *ngIf="job.JobStatus == 'Closed'" style="color: red;font-weight: bold;">{{ job.JobStatus }}</td>
+        <td *ngIf="job.JobStatus == 'Open'" style="color: rgb(26, 199, 26);font-weight: bold;">{{ job.JobStatus }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h6 *ngIf="jobLen<1" style="color: red;">No Results Available</h6>
+  
+    <!-- Pagination -->
+    <ngb-pagination
+        *ngIf="jobLen>0"
+        class="d-flex justify-content-center"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="jobLen">
+    </ngb-pagination>
+    
+    
+  
+  </div>
+  
+  <!-- Footer -->
+
+  
+  <router-outlet></router-outlet>  
