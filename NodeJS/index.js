@@ -8,7 +8,7 @@ var jobController = require('./controllers/jobController.js');
 
 var app = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors({ origin: 'http://localhost:4200' || 'https://jobs-tm.herokuapp.com/' }));
 
 app.listen(PORT, () => console.log('Server started at port : 3000'));
 
